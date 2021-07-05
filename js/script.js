@@ -3,13 +3,17 @@
     const cnv = document.getElementById('canvas')
     const ctx = cnv.getContext('2d')
 
-    // let alm = document.getElementById('alm')
-    // let posX = posY = 0
+    let alm = document.getElementById('alm')
 
-    // btn.addEventListener('click', () => {
-    //     alimento = alm.options[alm.selectedIndex].value
-    // })
+    btn.addEventListener('click', () => {
+        valorAlm = parseInt(alm.options[alm.selectedIndex].value)
+        console.log(calc(valorAlm, 1000, 1))
+    })
 
+    function calc(q, m, c){
+        let temp = q / (m * c)
+        return temp
+    }
 
     function desenhar(){
         
