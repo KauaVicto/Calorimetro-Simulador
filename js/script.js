@@ -5,6 +5,9 @@
 
     let alm = document.getElementById('alm')
 
+    let img = new image
+        img.src = ""
+
     btn.addEventListener('click', () => {
         valorAlm = parseInt(alm.options[alm.selectedIndex].value)
         console.log(calc(valorAlm, 1000, 1))
