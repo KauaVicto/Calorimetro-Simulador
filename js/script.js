@@ -6,12 +6,10 @@
     const LARG_JOGO = 600
 
     let alm = document.getElementById('alm')
-    let frame = 0
 
 /*---------- OBJETOS ----------*/
     calorimetro = {
         srcX: 0,
-        src: "assets/calorimetro.png",
         estado: "desligado",
         qtframe: 1
     }
@@ -22,7 +20,7 @@
 
 /*---------- IMAGEM ----------*/
     let img = new Image
-        img.src = calorimetro.src
+        img.src = "assets/calorimetro.png"
         img.addEventListener("load", () => {
             requestAnimationFrame(loop, CNV)
         }, false)
@@ -37,12 +35,14 @@
         console.log("iniciando...")
         fogo.estado = "ligado"
         setTimeout(() => {
-            calorimetro.srcX = frame = 0
-            trocaImg("iniciando")
+            calorimetro.srcX = 0
+            img.src = "assets/iniciando.png"
+            calorimetro.qtframe = 2
         }, 3000)
         setTimeout(() => {
-            calorimetro.srcX = frame = 0
-            trocaImg("fervendo")
+            calorimetro.srcX = 0
+            img.src = "assets/fervendo.png"
+            calorimetro.qtframe = 6
         }, 10000)
     })
 
@@ -50,20 +50,6 @@
     function calc(q, m, c){
         let temp = q / (m * c)
         return temp
-    }
-
-    function trocaImg(estado){
-        if(estado == "desligado"){
-            calorimetro.src = "assets/calorimetro.png"
-            calorimetro.qtframe = 1
-        }else if(estado == "iniciando"){
-            calorimetro.src = "assets/iniciando.png"
-            calorimetro.qtframe = 2
-        }else if(estado == "fervendo"){
-            calorimetro.src = "assets/fervendo.png"
-            calorimetro.qtframe = 6
-        }
-        img.src = calorimetro.src
     }
 
     function desenhar(){
@@ -82,29 +68,21 @@
         }
     }
 
-    function atualizar(){
-        frame++
-        if(frame >= 40){
-            calorimetro.srcX += 1200
-            if(calorimetro.srcX > (calorimetro.qtframe * 1200)-1200){
-                calorimetro.srcX = 0
-            }
-            if(fogo.estado == "ligado"){
-                fogo.srcX += 500
-                if(fogo.srcX > 1000){
-                    fogo.srcX = 0
-                }    
-            }
-            
-
-            frame = 0
-        }
-    }
-
+    setInterval(() => {
+        calorimetro.srcX += 1200
+        if(calorimetro.srcX > (calorimetro.qtframe * 1200)-1200){
+            calorimetro.srcX = 0
+        }            
+    }, 200);
+    setInterval(() => {
+        fogo.srcX += 500
+        if(fogo.srcX > 1000){
+            fogo.srcX = 0
+        }                   
+    }, 150);
 
     function loop(){
         desenhar()
-        atualizar()
         requestAnimationFrame(loop, CNV)
     }
 
