@@ -34,7 +34,16 @@
     BTN.addEventListener('click', () => {
         // valorAlm = parseInt(alm.options[alm.selectedIndex].value)
         // console.log(calc(valorAlm, 1000, 1))
-        trocaImg(calorimetro.estado)
+        console.log("iniciando...")
+        fogo.estado = "ligado"
+        setTimeout(() => {
+            calorimetro.srcX = frame = 0
+            trocaImg("iniciando")
+        }, 3000)
+        setTimeout(() => {
+            calorimetro.srcX = frame = 0
+            trocaImg("fervendo")
+        }, 10000)
     })
 
 /*---------- FUNÇOES ----------*/
@@ -46,6 +55,7 @@
     function trocaImg(estado){
         if(estado == "desligado"){
             calorimetro.src = "assets/calorimetro.png"
+            calorimetro.qtframe = 1
         }else if(estado == "iniciando"){
             calorimetro.src = "assets/iniciando.png"
             calorimetro.qtframe = 2
