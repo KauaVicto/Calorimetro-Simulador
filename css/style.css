@@ -51,5 +51,6 @@ canvas{
 
 .areaSim #temp #display{
     font-family: "Display";
-    font-size: 1.7rem;
+    font-size: 1.3rem;
+    color: black;
 }

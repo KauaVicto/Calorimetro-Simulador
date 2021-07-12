@@ -9,29 +9,32 @@
 
     let alm = document.getElementById('alm')
     let temp = 26
-    let avancoTemp = 480
+    let avancoTemp = 360
     let frame = 0
 
 /*---------- OBJETOS ----------*/
     calorimetro = {
         srcX: 0,
+        srcY: 0,
+        larg: 600,
+        alt: 600,
         estado: "desligado",
         qtframe: 1
     }
     fogo = {
         srcX: 0,
+        srcY: 3600,
+        larg: 100,
+        alt: 100,
         estado: "desligado"
     }
 
 /*---------- IMAGEM ----------*/
     let img = new Image
-        img.src = "assets/calorimetro.png"
+        img.src = "assets/sprites.png"
         img.addEventListener("load", () => {
             requestAnimationFrame(loop, CNV)
         }, false)
-    
-    let fogoImg = new Image
-        fogoImg.src = "assets/fogo.png"
 
 /*---------- EVENTOS ----------*/
     BTN.addEventListener('click', () => {
@@ -39,15 +42,15 @@
         // console.log(calc(valorAlm, 1000, 1))
         console.log("iniciando...")
         fogo.estado = "ligado"
-        DISPLAY.innerHTML = "0"+temp
+        DISPLAY.innerHTML = temp.toFixed(1)
         setTimeout(() => {
             calorimetro.srcX = 0
-            img.src = "assets/iniciando.png"
+            calorimetro.srcY = 1200
             calorimetro.qtframe = 2
         }, 10000)
         setTimeout(() => {
             calorimetro.srcX = 0
-            img.src = "assets/fervendo.png"
+            calorimetro.srcY = 2400
             calorimetro.qtframe = 6
         }, 20000)
     })
@@ -62,14 +65,14 @@
         CTX.clearRect(0, 0, LARG_JOGO, ALT_JOGO)
         CTX.drawImage(
             img,
-            calorimetro.srcX, 0, 1200, 1200,
-            0, 0, 600, 600
+            calorimetro.srcX, calorimetro.srcY, 1200, 1200,
+            0, 0, calorimetro.larg, calorimetro.alt
         )
         if(fogo.estado == "ligado"){
             CTX.drawImage(
-                fogoImg,
-                fogo.srcX, 0, 500, 500,
-                250, 370, 100, 100
+                img,
+                fogo.srcX, fogo.srcY, 500, 500,
+                250, 370, fogo.larg, fogo.alt
             )
         }
     }
@@ -77,20 +80,22 @@
     function atualizar(){
         frame++
         if(frame >= avancoTemp){
-            if(avancoTemp > 350){
-                avancoTemp -= 30
+            if(avancoTemp > 60){
+                avancoTemp -= 60
             }else{
-                avancoTemp = 200
+                avancoTemp = 60
             }
-            temp++
-            DISPLAY.innerHTML = (temp < 100) ? "0"+temp : temp
+            temp += Math.random()/3
+            DISPLAY.innerHTML = temp.toFixed(1)
             frame = 0
+
+            console.log(avancoTemp)
         }
     }
 
     setInterval(() => {
         calorimetro.srcX += 1200
-        if(calorimetro.srcX > (calorimetro.qtframe * 1200)-1200){
+        if(calorimetro.srcX > ((calorimetro.qtframe-1) * 1200)){
             calorimetro.srcX = 0
         }            
     }, 200);
@@ -109,6 +114,4 @@
 
         requestAnimationFrame(loop, CNV)
     }
-
-    loop()
 }())
