@@ -31,7 +31,7 @@
 
 /*---------- IMAGEM ----------*/
     let img = new Image
-        img.src = "assets/Sprites.png"
+        img.src = "assets/sprites.png"
         img.addEventListener("load", () => {
             requestAnimationFrame(loop, CNV)
         }, false)
