@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "Display";
+    src: url("../fonts/digitaldisplay.ttf");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
 body{
     height: 100vh;
     display: flex;
@@ -24,4 +36,20 @@ canvas{
     border: 2px solid black;
     border-radius: 15px;
     cursor: pointer;
+}
+
+.areaSim #temp{
+    position: absolute;
+    top: 72px;
+    left: 353px;
+    width: 48px;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.areaSim #temp #display{
+    font-family: "Display";
+    font-size: 1.7rem;
 }

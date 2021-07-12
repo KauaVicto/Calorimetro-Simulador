@@ -1,11 +1,16 @@
 (function(){
     const BTN = document.getElementById('btn')
+    const DISPLAY = document.getElementById('display')
+
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
     const ALT_JOGO = 600
     const LARG_JOGO = 600
 
     let alm = document.getElementById('alm')
+    let temp = 26
+    let avancoTemp = 480
+    let frame = 0
 
 /*---------- OBJETOS ----------*/
     calorimetro = {
@@ -34,16 +39,17 @@
         // console.log(calc(valorAlm, 1000, 1))
         console.log("iniciando...")
         fogo.estado = "ligado"
+        DISPLAY.innerHTML = "0"+temp
         setTimeout(() => {
             calorimetro.srcX = 0
             img.src = "assets/iniciando.png"
             calorimetro.qtframe = 2
-        }, 3000)
+        }, 10000)
         setTimeout(() => {
             calorimetro.srcX = 0
             img.src = "assets/fervendo.png"
             calorimetro.qtframe = 6
-        }, 10000)
+        }, 20000)
     })
 
 /*---------- FUNÇOES ----------*/
@@ -68,6 +74,20 @@
         }
     }
 
+    function atualizar(){
+        frame++
+        if(frame >= avancoTemp){
+            if(avancoTemp > 350){
+                avancoTemp -= 30
+            }else{
+                avancoTemp = 200
+            }
+            temp++
+            DISPLAY.innerHTML = (temp < 100) ? "0"+temp : temp
+            frame = 0
+        }
+    }
+
     setInterval(() => {
         calorimetro.srcX += 1200
         if(calorimetro.srcX > (calorimetro.qtframe * 1200)-1200){
@@ -83,6 +103,10 @@
 
     function loop(){
         desenhar()
+        if(fogo.estado == 'ligado'){
+            atualizar()            
+        }
+
         requestAnimationFrame(loop, CNV)
     }
 
