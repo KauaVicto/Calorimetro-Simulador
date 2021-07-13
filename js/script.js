@@ -63,7 +63,7 @@
 
 /*---------- FUNÇOES ----------*/
     function calc(q){
-        let temp = q / (1000*1)
+        let temp = q / 1000
         return temp
     }
 
