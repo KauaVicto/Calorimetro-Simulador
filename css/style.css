@@ -38,19 +38,50 @@ canvas{
     cursor: pointer;
 }
 
-.areaSim #temp{
+.areaSim .temp{
     position: absolute;
-    top: 72px;
-    left: 353px;
-    width: 48px;
-    height: 54px;
+    top: 61px;
+    left: 295px;
+    width: 39px;
+    height: 43px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.areaSim #temp #display{
+.areaSim .temp #display{
     font-family: "Display";
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: black;
+}
+
+.areaSim #alm{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 5px;
+    font-family: "Roboto";
+    font-weight: 600;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    outline: none;
+}
+
+.areaSim .formula{
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    min-width: 150px;
+    height: 40px;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.areaSim .formula #formula{
+    font-family: "Roboto";
+    font-size: 1.3rem;
+    margin: 0 10px;
 }

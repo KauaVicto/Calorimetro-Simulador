@@ -1,6 +1,7 @@
 (function(){
     const BTN = document.getElementById('btn')
     const DISPLAY = document.getElementById('display')
+    const RESULT = document.getElementById('formula')
 
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
@@ -8,7 +9,7 @@
     const LARG_JOGO = 600
 
     let alm = document.getElementById('alm')
-    let temp = 26
+    let temp = 26.0
     let avancoTemp = 360
     let frame = 0
 
@@ -16,16 +17,17 @@
     calorimetro = {
         srcX: 0,
         srcY: 0,
-        larg: 600,
-        alt: 600,
-        estado: "desligado",
+        larg: 500,
+        alt: 500,
         qtframe: 1
     }
     fogo = {
+        posX: 205,
+        posY: 300,
         srcX: 0,
         srcY: 3600,
-        larg: 100,
-        alt: 100,
+        larg: 94,
+        alt: 94,
         estado: "desligado"
     }
 
@@ -38,11 +40,15 @@
 
 /*---------- EVENTOS ----------*/
     BTN.addEventListener('click', () => {
-        // valorAlm = parseInt(alm.options[alm.selectedIndex].value)
-        // console.log(calc(valorAlm, 1000, 1))
+        valorAlm = parseInt(alm.options[alm.selectedIndex].value)
+        //console.log(calc(valorAlm))
+        RESULT.innerHTML = valorAlm + " = " + "1000 x 1 x " + calc(valorAlm)
+
         console.log("iniciando...")
+
         fogo.estado = "ligado"
         DISPLAY.innerHTML = temp.toFixed(1)
+
         setTimeout(() => {
             calorimetro.srcX = 0
             calorimetro.srcY = 1200
@@ -56,8 +62,8 @@
     })
 
 /*---------- FUNÇOES ----------*/
-    function calc(q, m, c){
-        let temp = q / (m * c)
+    function calc(q){
+        let temp = q / (1000*1)
         return temp
     }
 
@@ -72,7 +78,7 @@
             CTX.drawImage(
                 img,
                 fogo.srcX, fogo.srcY, 500, 500,
-                250, 370, fogo.larg, fogo.alt
+                fogo.posX, fogo.posY, fogo.larg, fogo.alt
             )
         }
     }
@@ -115,3 +121,35 @@
         requestAnimationFrame(loop, CNV)
     }
 }())
+
+/* 
+Açúcar granulado:
+387 Calorias
+
+Ovo cozido:
+155 Calorias
+
+Farinha:
+364 Calorias
+
+Manteiga:
+717 Calorias
+
+Cerveja:
+43 Calorias
+
+Pão:
+275 Calorias
+
+Panqueca:
+227 Calorias
+
+Banana:
+89 Calorias
+
+Maçã:
+52 Calorias
+
+Tapioca:
+130 Calorias
+*/
