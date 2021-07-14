@@ -41,7 +41,7 @@ canvas{
 .areaSim .temp{
     position: absolute;
     top: 61px;
-    left: 295px;
+    left: 337px;
     width: 39px;
     height: 43px;
     display: flex;
@@ -51,7 +51,7 @@ canvas{
 
 .areaSim .temp #display{
     font-family: "Display";
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: black;
 }
 
@@ -67,21 +67,24 @@ canvas{
     outline: none;
 }
 
-.areaSim .formula{
+.areaSim #formula{
     position: absolute;
     bottom: 25px;
     right: 20px;
-    min-width: 150px;
-    height: 40px;
+    min-width: 200px;
+    height: 30px;
     border: 2px solid #333333;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    transition: .1s ease;
 }
 
-.areaSim .formula #formula{
+
+.areaSim #formula .formln{
     font-family: "Roboto";
     font-size: 1.3rem;
-    margin: 0 10px;
+    width: 100%;
+    text-align: center;
 }

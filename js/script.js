@@ -9,21 +9,26 @@
     const LARG_JOGO = 600
 
     let alm = document.getElementById('alm')
-    let temp = 26.0
+    
     let avancoTemp = 360
     let frame = 0
+    let heightform = 27.04
 
+    let Tinic = Tatual = 26.0
+    let Tf = 0
 /*---------- OBJETOS ----------*/
     calorimetro = {
+        posX: -20,
+        posY: -15,
         srcX: 0,
         srcY: 0,
-        larg: 500,
-        alt: 500,
+        larg: 600,
+        alt: 600,
         qtframe: 1
     }
     fogo = {
-        posX: 205,
-        posY: 300,
+        posX: 235,
+        posY: 360,
         srcX: 0,
         srcY: 3600,
         larg: 94,
@@ -42,12 +47,17 @@
     BTN.addEventListener('click', () => {
         valorAlm = parseInt(alm.options[alm.selectedIndex].value)
         //console.log(calc(valorAlm))
-        RESULT.innerHTML = valorAlm + " = " + "1000 x 1 x " + calc(valorAlm)
+        Tf = calcTempFim(valorAlm)
+        RESULT.innerHTML += '<p class="formln">Q = m.c.('+Tf+'-'+Tinic+')</p>';
+        RESULT.innerHTML += '<p class="formln">Q = 1000.1.('+(Tf-Tinic).toFixed(2)+')</p>';
+        RESULT.innerHTML += '<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'</p>';
+        heightform += 29
+        RESULT.style.height = heightform+'px'
 
         console.log("iniciando...")
 
         fogo.estado = "ligado"
-        DISPLAY.innerHTML = temp.toFixed(1)
+        DISPLAY.innerHTML = Tinic.toFixed(2)
 
         setTimeout(() => {
             calorimetro.srcX = 0
@@ -62,9 +72,14 @@
     })
 
 /*---------- FUNÇOES ----------*/
-    function calc(q){
-        let temp = q / 1000
-        return temp
+    function calcTempFim(q){
+        let Tf = ((q / 1000)+Tinic).toFixed(2)
+        return Tf
+    }
+
+    function finalizar(){
+        console.log("Finalizou")
+        fogo.estado = "desligado"
     }
 
     function desenhar(){
@@ -72,7 +87,7 @@
         CTX.drawImage(
             img,
             calorimetro.srcX, calorimetro.srcY, 1200, 1200,
-            0, 0, calorimetro.larg, calorimetro.alt
+            calorimetro.posX, calorimetro.posY, calorimetro.larg, calorimetro.alt
         )
         if(fogo.estado == "ligado"){
             CTX.drawImage(
@@ -84,19 +99,25 @@
     }
 
     function atualizar(){
-        frame++
-        if(frame >= avancoTemp){
-            if(avancoTemp > 60){
-                avancoTemp -= 60
-            }else{
-                avancoTemp = 60
-            }
-            temp += Math.random()/3
-            DISPLAY.innerHTML = temp.toFixed(1)
-            frame = 0
-
-            console.log(avancoTemp)
+        if(Tatual < Tf){
+            frame++
+            if(frame >= avancoTemp){
+                if(avancoTemp > 60){
+                    avancoTemp -= 60
+                }else{
+                    avancoTemp = 60
+                }
+                Tatual += Math.random()/20
+                if(Tatual > parseFloat(Tf)){
+                    Tatual = parseFloat(Tf)
+                }
+                DISPLAY.innerHTML = Tatual.toFixed(2)
+                frame = 0
+            }            
+        }else{
+            finalizar()
         }
+
     }
 
     setInterval(() => {
