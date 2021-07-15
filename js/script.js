@@ -2,6 +2,7 @@
     const BTN = document.getElementById('btn')
     const DISPLAY = document.getElementById('display')
     const RESULT = document.getElementById('formula')
+    const BTNREIN = document.getElementById('reiniciar')
 
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
@@ -12,9 +13,10 @@
     
     let avancoTemp = 360
     let frame = 0
-    let heightform = 27.04
+    let heightform = 29
+    let iniciado = false
 
-    let Tinic = Tatual = 26.0
+    let Tinic = Tatual = 26.13
     let Tf = 0
 /*---------- OBJETOS ----------*/
     calorimetro = {
@@ -45,30 +47,46 @@
 
 /*---------- EVENTOS ----------*/
     BTN.addEventListener('click', () => {
-        valorAlm = parseInt(alm.options[alm.selectedIndex].value)
-        //console.log(calc(valorAlm))
-        Tf = calcTempFim(valorAlm)
-        RESULT.innerHTML += '<p class="formln">Q = m.c.('+Tf+'-'+Tinic+')</p>';
-        RESULT.innerHTML += '<p class="formln">Q = 1000.1.('+(Tf-Tinic).toFixed(2)+')</p>';
-        RESULT.innerHTML += '<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'</p>';
-        heightform += 29
-        RESULT.style.height = heightform+'px'
+        if(!iniciado){
+            iniciado = true
+            valorAlm = parseInt(alm.options[alm.selectedIndex].value)
+            console.log(valorAlm)
+            if(valorAlm != 0){
+                Tf = calcTempFim(valorAlm)
 
-        console.log("iniciando...")
+                console.log("iniciando...")
 
-        fogo.estado = "ligado"
-        DISPLAY.innerHTML = Tinic.toFixed(2)
+                fogo.estado = "ligado"
+                DISPLAY.innerHTML = Tinic.toFixed(2)
 
-        setTimeout(() => {
-            calorimetro.srcX = 0
-            calorimetro.srcY = 1200
-            calorimetro.qtframe = 2
-        }, 10000)
-        setTimeout(() => {
-            calorimetro.srcX = 0
-            calorimetro.srcY = 2400
-            calorimetro.qtframe = 6
-        }, 20000)
+                setTimeout(() => {
+                    calorimetro.srcX = 0
+                    calorimetro.srcY = 1200
+                    calorimetro.qtframe = 2
+                }, 10000)
+                setTimeout(() => {
+                    calorimetro.srcX = 0
+                    calorimetro.srcY = 2400
+                    calorimetro.qtframe = 6
+                }, 20000)  
+            }
+                      
+        }
+
+    })
+
+    BTNREIN.addEventListener('click', () => {
+        BTNREIN.style.display = 'none'
+        Tatual = Tinic
+        Tf = 0
+        avancoTemp = 360
+        iniciado = false
+        calorimetro.srcY = 0
+        calorimetro.qtframe = 1
+        fogo.estado = 'desligado'
+        RESULT.innerHTML = '<p class="formln">Q = m.c.(T<sub>f</sub>-T<sub>0</sub>)</p>'
+        heightform = 29
+        RESULT.style.height = '30px'
     })
 
 /*---------- FUNÇOES ----------*/
@@ -78,8 +96,29 @@
     }
 
     function finalizar(){
+        iniciado = false
         console.log("Finalizou")
-        fogo.estado = "desligado"
+        setTimeout(() => {
+            fogo.estado = "desligado"
+            calorimetro.srcY = 1200
+            calorimetro.qtframe = 2
+            
+            imprimirFormulas('<p class="formln">Q = m.c.('+Tf+'-'+Tinic+')</p>', 2000)
+            imprimirFormulas('<p class="formln">Q = 1000.1.('+(Tf-Tinic).toFixed(2)+')</p>', 4000)
+            imprimirFormulas('<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'</p>', 6000)
+            setTimeout(() => {
+                BTNREIN.style.display = 'block'
+            }, 6500);
+        }, 3000);
+        
+    }
+
+    function imprimirFormulas(f, t){
+        setTimeout(() => {
+            RESULT.innerHTML += f;
+            heightform += 29
+            RESULT.style.height = heightform+'px'
+        }, t);
     }
 
     function desenhar(){
@@ -135,42 +174,10 @@
 
     function loop(){
         desenhar()
-        if(fogo.estado == 'ligado'){
-            atualizar()            
+        if(iniciado){
+            atualizar()
         }
 
         requestAnimationFrame(loop, CNV)
     }
 }())
-
-/* 
-Açúcar granulado:
-387 Calorias
-
-Ovo cozido:
-155 Calorias
-
-Farinha:
-364 Calorias
-
-Manteiga:
-717 Calorias
-
-Cerveja:
-43 Calorias
-
-Pão:
-275 Calorias
-
-Panqueca:
-227 Calorias
-
-Banana:
-89 Calorias
-
-Maçã:
-52 Calorias
-
-Tapioca:
-130 Calorias
-*/
