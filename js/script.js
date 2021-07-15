@@ -12,6 +12,7 @@
     let alm = document.getElementById('alm')
     
     let avancoTemp = 360
+    let desaceleraTemp = 60
     let frame = 0
     let heightform = 29
     let iniciado = false
@@ -29,13 +30,21 @@
         qtframe: 1
     }
     fogo = {
-        posX: 235,
-        posY: 360,
+        posX: 205,
+        posY: 320,
         srcX: 0,
         srcY: 3600,
-        larg: 94,
-        alt: 94,
+        larg: 150,
+        alt: 150,
         estado: "desligado"
+    }
+    alimento = {
+        posX: 240,
+        posY: 370,
+        srcX: 0,
+        srcY: 0,
+        larg: 94,
+        alt: 94
     }
 
 /*---------- IMAGEM ----------*/
@@ -44,26 +53,30 @@
         img.addEventListener("load", () => {
             requestAnimationFrame(loop, CNV)
         }, false)
+    let alimentos = new Image
+        alimentos.src = "assets/alimentos.png"
 
 /*---------- EVENTOS ----------*/
     BTN.addEventListener('click', () => {
         if(!iniciado){
             iniciado = true
             valorAlm = parseInt(alm.options[alm.selectedIndex].value)
-            console.log(valorAlm)
+            alimento.srcY = (alm.selectedIndex-1)*500
             if(valorAlm != 0){
                 Tf = calcTempFim(valorAlm)
 
                 console.log("iniciando...")
-
-                fogo.estado = "ligado"
+                setTimeout(() => {
+                    fogo.estado = "ligado"
+                }, 2000);
+                
                 DISPLAY.innerHTML = Tinic.toFixed(2)
 
                 setTimeout(() => {
                     calorimetro.srcX = 0
                     calorimetro.srcY = 1200
                     calorimetro.qtframe = 2
-                }, 10000)
+                }, 3000)
                 setTimeout(() => {
                     calorimetro.srcX = 0
                     calorimetro.srcY = 2400
@@ -128,6 +141,13 @@
             calorimetro.srcX, calorimetro.srcY, 1200, 1200,
             calorimetro.posX, calorimetro.posY, calorimetro.larg, calorimetro.alt
         )
+        if(iniciado){
+            CTX.drawImage(
+                alimentos,
+                alimento.srcX, alimento.srcY, 500, 500,
+                alimento.posX, alimento.posY, alimento.larg, alimento.alt
+            )
+        }
         if(fogo.estado == "ligado"){
             CTX.drawImage(
                 img,
@@ -135,16 +155,18 @@
                 fogo.posX, fogo.posY, fogo.larg, fogo.alt
             )
         }
+        
+        
     }
 
     function atualizar(){
         if(Tatual < Tf){
             frame++
             if(frame >= avancoTemp){
-                if(avancoTemp > 60){
-                    avancoTemp -= 60
+                if(avancoTemp > desaceleraTemp){
+                    avancoTemp -= desaceleraTemp
                 }else{
-                    avancoTemp = 60
+                    avancoTemp = desaceleraTemp
                 }
                 Tatual += Math.random()/20
                 if(Tatual > parseFloat(Tf)){
