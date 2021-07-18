@@ -12,14 +12,26 @@
 
 body{
     height: 100vh;
+    background-image: url('../assets/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/*---------- CANVAS ------------*/
+
 canvas{
     border: 2px groove #333333;
     background-color: #ccc;
+}
+
+.Simulador{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15vh;
 }
 
 .areaSim{
@@ -118,3 +130,6 @@ canvas{
     cursor: pointer;
     display: none;
 }
+
+/*---------- STYLE ----------- */
+
