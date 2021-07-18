@@ -3,22 +3,22 @@
     const DISPLAY = document.getElementById('display')
     const RESULT = document.getElementById('formula')
     const BTNREIN = document.getElementById('reiniciar')
-
+    const ALM = document.getElementById('alm')
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
+
     const ALT_JOGO = 600
     const LARG_JOGO = 600
-
-    let alm = document.getElementById('alm')
     
     let avancoTemp = 360
     let desaceleraTemp = 60
     let frame = 0
-    let heightform = 29
+    let altFormula = 29
     let iniciado = false
 
-    let Tinic = Tatual = 26.13
+    let Tinic  = 26.13
     let Tf = 0
+    let Tatual = Tinic
 /*---------- OBJETOS ----------*/
     calorimetro = {
         posX: -20,
@@ -60,8 +60,8 @@
     BTN.addEventListener('click', () => {
         if(!iniciado){
             iniciado = true
-            valorAlm = parseInt(alm.options[alm.selectedIndex].value)
-            alimento.srcY = (alm.selectedIndex-1)*500
+            valorAlm = parseInt(ALM.options[ALM.selectedIndex].value)
+            alimento.srcY = (ALM.selectedIndex-1)*500
             if(valorAlm != 0){
                 Tf = calcTempFim(valorAlm)
 
@@ -98,7 +98,7 @@
         calorimetro.qtframe = 1
         fogo.estado = 'desligado'
         RESULT.innerHTML = '<p class="formln">Q = m.c.(T<sub>f</sub>-T<sub>0</sub>)</p>'
-        heightform = 29
+        altFormula = 29
         RESULT.style.height = '30px'
     })
 
@@ -129,8 +129,8 @@
     function imprimirFormulas(f, t){
         setTimeout(() => {
             RESULT.innerHTML += f;
-            heightform += 29
-            RESULT.style.height = heightform+'px'
+            altFormula += 29
+            RESULT.style.height = altFormula+'px'
         }, t);
     }
 
