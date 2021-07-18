@@ -6,12 +6,14 @@
     const ALM = document.getElementById('alm')
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
+    const TEMPESTAVEL = document.getElementById('tempEstavel')
 
     const ALT_JOGO = 600
     const LARG_JOGO = 600
     
-    let avancoTemp = 360
+    let avancoTemp = 300
     let desaceleraTemp = 60
+    let Speedmin = 40
     let frame = 0
     let altFormula = 29
     let iniciado = false
@@ -30,12 +32,12 @@
         qtframe: 1
     }
     fogo = {
-        posX: 205,
-        posY: 320,
+        posX: 220,
+        posY: 380,
         srcX: 0,
         srcY: 3600,
-        larg: 150,
-        alt: 150,
+        larg: 130,
+        alt: 130,
         estado: "desligado"
     }
     alimento = {
@@ -115,6 +117,8 @@
             fogo.estado = "desligado"
             calorimetro.srcY = 1200
             calorimetro.qtframe = 2
+            TEMPESTAVEL.innerHTML += parseFloat(Tf).toFixed(2) + '°C'
+            TEMPESTAVEL.style.display = 'block'
             
             imprimirFormulas('<p class="formln">Q = m.c.('+Tf+'-'+Tinic+')</p>', 2000)
             imprimirFormulas('<p class="formln">Q = 1000.1.('+(Tf-Tinic).toFixed(2)+')</p>', 4000)
@@ -163,10 +167,10 @@
         if(Tatual < Tf){
             frame++
             if(frame >= avancoTemp){
-                if(avancoTemp > desaceleraTemp){
+                if(avancoTemp > Speedmin){
                     avancoTemp -= desaceleraTemp
                 }else{
-                    avancoTemp = desaceleraTemp
+                    avancoTemp = Speedmin
                 }
                 Tatual += Math.random()/20
                 if(Tatual > parseFloat(Tf)){
