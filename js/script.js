@@ -128,7 +128,7 @@
             
             imprimirFormulas('<p class="formln">Q = m.c.('+TfString+'-'+TiString+')</p>', 2000)
             imprimirFormulas('<p class="formln">Q = 1000.1.('+TResult+')</p>', 4000)
-            imprimirFormulas('<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'Kcal</p>', 6000)
+            imprimirFormulas('<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'cal</p>', 6000)
             setTimeout(() => {
                 BTNREINICIAR.style.display = 'block'
             }, 6500);
