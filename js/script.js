@@ -2,7 +2,7 @@
     const BTN = document.getElementById('btn')
     const DISPLAY = document.getElementById('display')
     const RESULT = document.getElementById('formula')
-    const BTNREIN = document.getElementById('reiniciar')
+    const BTNREINICIAR = document.getElementById('reiniciar')
     const ALM = document.getElementById('alm')
     const CNV = document.getElementById('canvas')
     const CTX = CNV.getContext('2d')
@@ -90,8 +90,8 @@
 
     })
 
-    BTNREIN.addEventListener('click', () => {
-        BTNREIN.style.display = 'none'
+    BTNREINICIAR.addEventListener('click', () => {
+        BTNREINICIAR.style.display = 'none'
         Tatual = Tinic
         Tf = 0
         avancoTemp = 360
@@ -99,9 +99,12 @@
         calorimetro.srcY = 0
         calorimetro.qtframe = 1
         fogo.estado = 'desligado'
-        RESULT.innerHTML = '<p class="formln">Q = m.c.(T<sub>f</sub>-T<sub>0</sub>)</p>'
-        altFormula = 29
         RESULT.style.height = '30px'
+        RESULT.innerHTML = '<p class="formln">Q = m.c.(T<sub>f</sub>-T<sub>0</sub>)</p>'
+        TEMPESTAVEL.innerHTML = 'Temperatura Estável: '
+        TEMPESTAVEL.style.display = 'none'
+        altFormula = 29
+        
     })
 
 /*---------- FUNÇOES ----------*/
@@ -119,12 +122,15 @@
             calorimetro.qtframe = 2
             TEMPESTAVEL.innerHTML += parseFloat(Tf).toFixed(2) + '°C'
             TEMPESTAVEL.style.display = 'block'
+            let TfString = Tf.toString().replace(".", ",")
+            let TiString = Tinic.toString().replace(".", ",")
+            let TResult = (Tf-Tinic).toFixed(2).toString().replace(".", ",")
             
-            imprimirFormulas('<p class="formln">Q = m.c.('+Tf+'-'+Tinic+')</p>', 2000)
-            imprimirFormulas('<p class="formln">Q = 1000.1.('+(Tf-Tinic).toFixed(2)+')</p>', 4000)
-            imprimirFormulas('<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'</p>', 6000)
+            imprimirFormulas('<p class="formln">Q = m.c.('+TfString+'-'+TiString+')</p>', 2000)
+            imprimirFormulas('<p class="formln">Q = 1000.1.('+TResult+')</p>', 4000)
+            imprimirFormulas('<p class="formln">Q = '+(Tf-Tinic).toFixed(2)*1000+'Kcal</p>', 6000)
             setTimeout(() => {
-                BTNREIN.style.display = 'block'
+                BTNREINICIAR.style.display = 'block'
             }, 6500);
         }, 3000);
         
