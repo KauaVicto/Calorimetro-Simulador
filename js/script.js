@@ -101,7 +101,7 @@
         fogo.estado = 'desligado'
         RESULT.style.height = '30px'
         RESULT.innerHTML = '<p class="formln">Q = m.c.(T<sub>f</sub>-T<sub>0</sub>)</p>'
-        TEMPESTAVEL.innerHTML = 'Temperatura Estável: '
+        TEMPESTAVEL.innerHTML = '<b>Temperatura Estável: </b>'
         TEMPESTAVEL.style.display = 'none'
         altFormula = 29
         
